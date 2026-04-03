@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Agent Studio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: Arial,sans-serif; background:#0b0f19; color:white; text-align:center; padding:40px; }
+h1 { font-size:48px; }
+.btn { background: linear-gradient(90deg,#3b82f6,#8b5cf6); color:white; padding:12px 20px; border-radius:8px; text-decoration:none; display:inline-block; margin-top:20px; }
+#chatbox { max-width:600px; margin:40px auto; background:#111; padding:20px; border-radius:10px; }
+#messages { height:250px; overflow-y:auto; text-align:left; }
+input { width:70%; padding:10px; border-radius:6px; border:none; }
+button { padding:10px 16px; background:#3b82f6; color:white; border:none; border-radius:6px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h1>AI Agents That Grow Your Business</h1>
+<p>Chat with our AI to see what we can build for you</p>
+
+<a href="https://calendly.com/YOUR-LINK" class="btn">Book a Free Call</a>
+
+<div id="chatbox">
+  <div id="messages"></div>
+  <input id="input" placeholder="Ask about AI for your business..." />
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+async function sendMessage() {
+  const input = document.getElementById("input");
+  const messages = document.getElementById("messages");
+  const text = input.value;
+  if(!text) return;
+
+  messages.innerHTML += "<p><b>You:</b> "+text+"</p>";
+
+  const res = await fetch("YOUR_BACKEND_URL", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message:text})
+  });
+
+  const data = await res.json();
+  messages.innerHTML += "<p><b>AI:</b> "+data.reply+"</p>";
+  input.value="";
+  messages.scrollTop=messages.scrollHeight;
+}
+</script>
+
+</body>
+</html>
